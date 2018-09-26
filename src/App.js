@@ -1,9 +1,17 @@
 import React, { Component } from "react";
 import "./App.css";
+import { Contacts } from "./components/Contacts";
+import { Provider } from "./context";
 
 class App extends Component {
     render() {
-        return <div className="App" />;
+        return (
+            <Provider>
+                <div className="App">
+                    <Contacts />
+                </div>
+            </Provider>
+        );
     }
 }
 
