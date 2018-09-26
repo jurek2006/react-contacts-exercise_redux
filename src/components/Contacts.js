@@ -3,29 +3,29 @@ import { Contact } from "./Contact";
 import { Consumer } from "../context";
 
 export class Contacts extends Component {
-    renderContactsList() {
+    renderContactsList(contacts) {
         return (
-            <Consumer>
-                {value => {
-                    const { contacts } = value;
-                    return (
-                        <ul>
-                            {contacts.map(contact => (
-                                <Contact key={contact.id} contact={contact} />
-                            ))}
-                        </ul>
-                    );
-                }}
-            </Consumer>
+            <ul>
+                {contacts.map(contact => (
+                    <Contact key={contact.id} contact={contact} />
+                ))}
+            </ul>
         );
     }
 
     render() {
         return (
-            <div>
-                <h1>Kontakty:</h1>
-                {this.renderContactsList()}
-            </div>
+            <Consumer>
+                {value => {
+                    const { contacts } = value;
+                    return (
+                        <div>
+                            <h1>Kontakty:</h1>
+                            {this.renderContactsList(contacts)}
+                        </div>
+                    );
+                }}
+            </Consumer>
         );
     }
 }
