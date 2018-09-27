@@ -5,6 +5,11 @@ export class AddContact extends Component {
     handleCancel(dispatch) {
         dispatch({ type: "SHOW_HIDE_ADD_CONTACT", payload: false });
     }
+
+    handleSubmit(dispatch, e) {
+        e.preventDefault();
+        dispatch({ type: "SHOW_HIDE_ADD_CONTACT", payload: false });
+    }
     render() {
         return (
             <Consumer>
@@ -16,17 +21,78 @@ export class AddContact extends Component {
                                 Dodaj kontakt
                             </h2>
                             <div className="card-body">
-                                <p>Dodawanie</p>
-                                <button
-                                    onClick={this.handleCancel.bind(
+                                <form
+                                    onSubmit={this.handleSubmit.bind(
                                         this,
                                         dispatch
                                     )}
-                                    type="button"
-                                    className="btn btn-secondary"
                                 >
-                                    Anuluj
-                                </button>
+                                    <div className="formGroup">
+                                        <label htmlFor="firstName">Imię:</label>
+                                        <input
+                                            type="text"
+                                            name="firstName"
+                                            className="form-control"
+                                            placeholder="Podaj imię"
+                                        />
+                                    </div>
+                                    <div className="formGroup">
+                                        <label htmlFor="lastName">
+                                            Nazwisko:
+                                        </label>
+                                        <input
+                                            type="text"
+                                            name="lastName"
+                                            className="form-control"
+                                            placeholder="Podaj nazwisko"
+                                        />
+                                    </div>
+                                    <div className="formGroup">
+                                        <label htmlFor="email">Email:</label>
+                                        <input
+                                            type="email"
+                                            name="email"
+                                            className="form-control"
+                                            placeholder="Podaj email"
+                                        />
+                                    </div>
+                                    <div className="formGroup">
+                                        <label htmlFor="phone">
+                                            Numer telefonu:
+                                        </label>
+                                        <input
+                                            type="tel"
+                                            name="phone"
+                                            className="form-control"
+                                            placeholder="Podaj numer telefonu"
+                                        />
+                                    </div>
+                                    <div className="formGroup">
+                                        <label htmlFor="city">
+                                            Miejscowość:
+                                        </label>
+                                        <input
+                                            type="text"
+                                            name="city"
+                                            className="form-control"
+                                            placeholder="Podaj miejscowość"
+                                        />
+                                    </div>
+                                    <input
+                                        type="submit"
+                                        value="Dodaj kontakt"
+                                        className="btn btn-success"
+                                    />
+                                    <input
+                                        onClick={this.handleCancel.bind(
+                                            this,
+                                            dispatch
+                                        )}
+                                        type="button"
+                                        className="btn btn-secondary"
+                                        value="Anuluj"
+                                    />
+                                </form>
                             </div>
                         </div>
                     );
