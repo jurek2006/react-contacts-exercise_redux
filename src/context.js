@@ -11,6 +11,11 @@ const reducer = (state, action) => {
                     contact => contact.id !== action.payload
                 )
             };
+        case "SHOW_HIDE_ADD_CONTACT":
+            return {
+                ...state,
+                addContactVisible: action.payload
+            };
         default:
             return state;
     }
@@ -36,6 +41,7 @@ export class Provider extends Component {
                 id: uuid()
             }
         ],
+        addContactVisible: false,
         dispatch: action => this.setState(state => reducer(state, action))
     };
 
