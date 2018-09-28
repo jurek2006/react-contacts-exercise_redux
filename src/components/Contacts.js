@@ -18,11 +18,10 @@ export class Contacts extends Component {
         return (
             <Consumer>
                 {value => {
-                    const { contacts, addContactVisible } = value;
+                    const { contacts } = value;
                     return (
                         <React.Fragment>
-                            {addContactVisible && <AddContact />}
-
+                            <AddContact />
                             <div className="card m-3">
                                 <h1 className="card-header bg-danger">
                                     Kontakty
