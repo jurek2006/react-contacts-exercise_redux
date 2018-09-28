@@ -1,12 +1,13 @@
 import React, { Component } from "react";
 import { Consumer } from "../context";
+import { FormGroup } from "./FormGroup";
 
 export class AddContact extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            firstName: "Jurek",
+            firstName: "",
             lastName: "",
             email: "",
             phone: "",
@@ -27,6 +28,7 @@ export class AddContact extends Component {
         this.setState({ [e.target.name]: e.target.value });
     }
     render() {
+        const { firstName, lastName, email, phone, city } = this.state;
         return (
             <Consumer>
                 {value => {
@@ -44,82 +46,53 @@ export class AddContact extends Component {
                                             dispatch
                                         )}
                                     >
-                                        {/* ZREFAKTORYZOWAĆ POLA FORMULARZA */}
-                                        <div className="formGroup">
-                                            <label htmlFor="firstName">
-                                                Imię:
-                                            </label>
-                                            <input
-                                                type="text"
-                                                name="firstName"
-                                                className="form-control"
-                                                placeholder="Podaj imię"
-                                                value={this.state.firstName}
-                                                onChange={this.handleFieldValueChange.bind(
-                                                    this
-                                                )}
-                                            />
-                                        </div>
-                                        <div className="formGroup">
-                                            <label htmlFor="lastName">
-                                                Nazwisko:
-                                            </label>
-                                            <input
-                                                type="text"
-                                                name="lastName"
-                                                className="form-control"
-                                                placeholder="Podaj nazwisko"
-                                                value={this.state.lastName}
-                                                onChange={this.handleFieldValueChange.bind(
-                                                    this
-                                                )}
-                                            />
-                                        </div>
-                                        <div className="formGroup">
-                                            <label htmlFor="email">
-                                                Email:
-                                            </label>
-                                            <input
-                                                type="email"
-                                                name="email"
-                                                className="form-control"
-                                                placeholder="Podaj email"
-                                                value={this.state.email}
-                                                onChange={this.handleFieldValueChange.bind(
-                                                    this
-                                                )}
-                                            />
-                                        </div>
-                                        <div className="formGroup">
-                                            <label htmlFor="phone">
-                                                Numer telefonu:
-                                            </label>
-                                            <input
-                                                type="tel"
-                                                name="phone"
-                                                className="form-control"
-                                                placeholder="Podaj numer telefonu"
-                                                value={this.state.phone}
-                                                onChange={this.handleFieldValueChange.bind(
-                                                    this
-                                                )}
-                                            />
-                                        </div>
-                                        <div className="formGroup">
-                                            <label htmlFor="city">
-                                                Miejscowość:
-                                            </label>
-                                            <input
-                                                type="text"
-                                                name="city"
-                                                className="form-control"
-                                                placeholder="Podaj miejscowość"
-                                                value={this.state.city}
-                                                onChange={this.handleFieldValueChange.bind(
-                                                    this
-                                                )}
-                                            />
-                                        </div>
+                                        <FormGroup
+                                            label="Imię"
+                                            name="firstName"
+                                            placeholder="Podaj imię"
+                                            value={firstName}
+                                            onChange={this.handleFieldValueChange.bind(
+                                                this
+                                            )}
+                                        />
+                                        <FormGroup
+                                            label="Nazwisko"
+                                            name="lastName"
+                                            placeholder="Podaj nazwisko"
+                                            value={lastName}
+                                            onChange={this.handleFieldValueChange.bind(
+                                                this
+                                            )}
+                                        />
+                                        <FormGroup
+                                            label="Email"
+                                            name="email"
+                                            type="email"
+                                            placeholder="Podaj email"
+                                            value={email}
+                                            onChange={this.handleFieldValueChange.bind(
+                                                this
+                                            )}
+                                        />
+                                        <FormGroup
+                                            label="Telefon"
+                                            name="phone"
+                                            type="tel"
+                                            placeholder="Podaj numer telefonu"
+                                            value={phone}
+                                            onChange={this.handleFieldValueChange.bind(
+                                                this
+                                            )}
+                                        />
+                                        <FormGroup
+                                            label="Miejscowość"
+                                            name="city"
+                                            placeholder="Podaj miejscowość zamieszkania"
+                                            value={city}
+                                            onChange={this.handleFieldValueChange.bind(
+                                                this
+                                            )}
+                                        />
                                         <input
                                             type="submit"
                                             value="Dodaj kontakt"
