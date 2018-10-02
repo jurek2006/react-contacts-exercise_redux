@@ -3,7 +3,7 @@ import { Consumer } from "../context";
 
 export class Header extends Component {
     handleAddContactClick(dispatch) {
-        dispatch({ type: "SHOW_HIDE_ADD_CONTACT", payload: true });
+        dispatch({ type: "SHOW_HIDE_ADD_CONTACT_VIEW", payload: true });
     }
     render() {
         return (

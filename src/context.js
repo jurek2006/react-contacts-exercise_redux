@@ -11,10 +11,19 @@ const reducer = (state, action) => {
                     contact => contact.id !== action.payload
                 )
             };
-        case "SHOW_HIDE_ADD_CONTACT":
+        case "SHOW_HIDE_ADD_CONTACT_VIEW":
             return {
                 ...state,
                 addContactVisible: action.payload
+            };
+        case "ADD_CONTACT":
+            return {
+                ...state,
+                contacts: [
+                    ...state.contacts,
+                    { ...action.payload, id: uuid() }
+                ],
+                addContactVisible: false
             };
         default:
             return state;

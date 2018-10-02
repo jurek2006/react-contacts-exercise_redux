@@ -6,29 +6,61 @@ export class AddContact extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {
-            firstName: "",
-            lastName: "",
-            email: "",
-            phone: "",
-            city: ""
-        };
+        this.state = this.emptyFormState;
     }
 
+    emptyFormState = {
+        firstName: "",
+        lastName: "",
+        email: "",
+        phone: "",
+        city: "",
+        errors: {}
+    };
+
     handleCancel(dispatch) {
-        dispatch({ type: "SHOW_HIDE_ADD_CONTACT", payload: false });
+        this.setState(this.emptyFormState);
+        dispatch({ type: "SHOW_HIDE_ADD_CONTACT_VIEW", payload: false });
     }
 
     handleSubmit(dispatch, e) {
         e.preventDefault();
-        dispatch({ type: "SHOW_HIDE_ADD_CONTACT", payload: false });
+        if (this.validateForm()) {
+            // if pasess validation with no errors
+            const { errors, ...fields } = this.state; //destructing to have fiels from state, without errors
+            dispatch({ type: "ADD_CONTACT", payload: fields });
+            this.setState(this.emptyFormState);
+        }
     }
 
     handleFieldValueChange(e) {
         this.setState({ [e.target.name]: e.target.value });
     }
-    render() {
+
+    validateForm() {
         const { firstName, lastName, email, phone, city } = this.state;
+        let errors = {};
+
+        if (firstName.trim().length < 1) {
+            errors = { ...errors, firstName: "Nie podano imienia" };
+        }
+        if (lastName.trim().length < 1) {
+            errors = { ...errors, lastName: "Nie podano nazwiska" };
+        }
+        if (email.trim().length < 1) {
+            errors = { ...errors, email: "Nie podano email" };
+        }
+        if (phone.trim().length < 1) {
+            errors = { ...errors, phone: "Nie podano nr telefonu" };
+        }
+        if (city.trim().length < 1) {
+            errors = { ...errors, city: "Nie podano miasta" };
+        }
+        this.setState({ errors });
+        return !Object.keys(errors).length > 0; //returns false if there's at least one error
+    }
+    render() {
+        const { firstName, lastName, email, phone, city, errors } = this.state;
         return (
             <Consumer>
                 {value => {
@@ -54,6 +86,7 @@ export class AddContact extends Component {
                                             onChange={this.handleFieldValueChange.bind(
                                                 this
                                             )}
+                                            error={errors.firstName}
                                         />
                                         <FormGroup
                                             label="Nazwisko"
@@ -63,6 +96,7 @@ export class AddContact extends Component {
                                             onChange={this.handleFieldValueChange.bind(
                                                 this
                                             )}
+                                            error={errors.lastName}
                                         />
                                         <FormGroup
                                             label="Email"
@@ -73,6 +107,7 @@ export class AddContact extends Component {
                                             onChange={this.handleFieldValueChange.bind(
                                                 this
                                             )}
+                                            error={errors.email}
                                         />
                                         <FormGroup
                                             label="Telefon"
@@ -83,6 +118,7 @@ export class AddContact extends Component {
                                             onChange={this.handleFieldValueChange.bind(
                                                 this
                                             )}
+                                            error={errors.phone}
                                         />
                                         <FormGroup
                                             label="Miejscowość"
@@ -92,6 +128,7 @@ export class AddContact extends Component {
                                             onChange={this.handleFieldValueChange.bind(
                                                 this
                                             )}
+                                            error={errors.city}
                                         />
                                         <input
                                             type="submit"
