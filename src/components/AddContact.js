@@ -25,9 +25,9 @@ export class AddContact extends Component {
 
     handleSubmit(dispatch, e) {
         e.preventDefault();
-        if (this.validateForm()) {
+        const { errors, ...fields } = this.state; //destructing to have fiels from state, without errors
+        if (this.validateForm(fields, errors)) {
             // if pasess validation with no errors
-            const { errors, ...fields } = this.state; //destructing to have fiels from state, without errors
             dispatch({ type: "ADD_CONTACT", payload: fields });
             this.setState(this.emptyFormState);
         }
@@ -37,25 +37,17 @@ export class AddContact extends Component {
         this.setState({ [e.target.name]: e.target.value });
     }
 
-    validateForm() {
-        const { firstName, lastName, email, phone, city } = this.state;
+    validateForm(fields) {
+        // validates fields and returs true if every field is ok
+        // retutns false and sets errors in state when any empty field value found
         let errors = {};
 
-        if (firstName.trim().length < 1) {
-            errors = { ...errors, firstName: "Nie podano imienia" };
-        }
-        if (lastName.trim().length < 1) {
-            errors = { ...errors, lastName: "Nie podano nazwiska" };
-        }
-        if (email.trim().length < 1) {
-            errors = { ...errors, email: "Nie podano email" };
-        }
-        if (phone.trim().length < 1) {
-            errors = { ...errors, phone: "Nie podano nr telefonu" };
-        }
-        if (city.trim().length < 1) {
-            errors = { ...errors, city: "Nie podano miasta" };
-        }
+        // iterates over each field in fields - if field's value is empty adds error (for example: for field named firstName puts true in errors.firstName)
+        Object.entries(fields).forEach(([field, value]) => {
+            if (value.trim().length < 1) {
+                errors = { ...errors, [field]: true };
+            }
+        });
         this.setState({ errors });
         return !Object.keys(errors).length > 0; //returns false if there's at least one error
     }
@@ -86,7 +78,8 @@ export class AddContact extends Component {
                                             onChange={this.handleFieldValueChange.bind(
                                                 this
                                             )}
-                                            error={errors.firstName}
+                                            errors={errors}
+                                            errorMessage="Nie podano imienia"
                                         />
                                         <FormGroup
                                             label="Nazwisko"
@@ -96,7 +89,8 @@ export class AddContact extends Component {
                                             onChange={this.handleFieldValueChange.bind(
                                                 this
                                             )}
-                                            error={errors.lastName}
+                                            errors={errors}
+                                            errorMessage="Nie podano nazwiska"
                                         />
                                         <FormGroup
                                             label="Email"
@@ -107,7 +101,8 @@ export class AddContact extends Component {
                                             onChange={this.handleFieldValueChange.bind(
                                                 this
                                             )}
-                                            error={errors.email}
+                                            errors={errors}
+                                            errorMessage="Nie podano adresu email"
                                         />
                                         <FormGroup
                                             label="Telefon"
@@ -118,7 +113,8 @@ export class AddContact extends Component {
                                             onChange={this.handleFieldValueChange.bind(
                                                 this
                                             )}
-                                            error={errors.phone}
+                                            errors={errors}
+                                            errorMessage="Nie podano numeru telefonu"
                                         />
                                         <FormGroup
                                             label="Miejscowość"
@@ -128,7 +124,8 @@ export class AddContact extends Component {
                                             onChange={this.handleFieldValueChange.bind(
                                                 this
                                             )}
-                                            error={errors.city}
+                                            errors={errors}
+                                            errorMessage="Nie podano miasta"
                                         />
                                         <input
                                             type="submit"

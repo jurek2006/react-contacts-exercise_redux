@@ -11,14 +11,17 @@ export class FormGroup extends Component {
             placeholder,
             value,
             onChange,
-            error
+            errorMessage,
+            errors
         } = this.props;
         return (
             <div className="formGroup">
                 <label htmlFor={name}>{label}</label>
                 <input
+                    //if there is error for given field in errors
+                    //for example: field firstName checks if there is errors.firstName === true - then adds class is-invalid and renders div.invalid-feedback
                     className={classnames("form-control", {
-                        "is-invalid": error
+                        "is-invalid": errors[name]
                     })}
                     name={name}
                     type={type}
@@ -26,7 +29,9 @@ export class FormGroup extends Component {
                     value={value}
                     onChange={onChange}
                 />
-                {error && <div className="invalid-feedback">{error}</div>}
+                {errors[name] && (
+                    <div className="invalid-feedback">{errorMessage}</div>
+                )}
             </div>
         );
     }
