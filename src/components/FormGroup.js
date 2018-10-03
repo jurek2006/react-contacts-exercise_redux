@@ -15,8 +15,10 @@ export class FormGroup extends Component {
             errors
         } = this.props;
         return (
-            <div className="formGroup">
-                <label htmlFor={name}>{label}</label>
+            <div className="formGroup mb-3">
+                <label className="mb-0" htmlFor={name}>
+                    {label}
+                </label>
                 <input
                     //if there is error for given field in errors
                     //for example: field firstName checks if there is errors.firstName === true - then adds class is-invalid and renders div.invalid-feedback

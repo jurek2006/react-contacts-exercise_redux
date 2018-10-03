@@ -37,6 +37,7 @@ export class AddContact extends Component {
         this.setState({ [e.target.name]: e.target.value }); //change field's value
         const { errors } = this.state;
         if (errors[e.target.name] && e.target.value.trim().length > 0) {
+            // if there was already error for this field and now field's value is not empty - get rid of this error
             const { ...newErrors } = errors;
             delete newErrors[e.target.name];
             this.setState({ errors: newErrors });
@@ -133,20 +134,22 @@ export class AddContact extends Component {
                                             errors={errors}
                                             errorMessage="Nie podano miasta"
                                         />
-                                        <input
-                                            type="submit"
-                                            value="Dodaj kontakt"
-                                            className="btn btn-success"
-                                        />
-                                        <input
-                                            onClick={this.handleCancel.bind(
-                                                this,
-                                                dispatch
-                                            )}
-                                            type="button"
-                                            className="btn btn-secondary"
-                                            value="Anuluj"
-                                        />
+                                        <div className="text-center">
+                                            <input
+                                                type="submit"
+                                                value="Dodaj kontakt"
+                                                className="btn btn-success mx-1"
+                                            />
+                                            <input
+                                                onClick={this.handleCancel.bind(
+                                                    this,
+                                                    dispatch
+                                                )}
+                                                type="button"
+                                                className="btn btn-secondary"
+                                                value="Anuluj"
+                                            />
+                                        </div>
                                     </form>
                                 </div>
                             </div>
