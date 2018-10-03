@@ -34,7 +34,13 @@ export class AddContact extends Component {
     }
 
     handleFieldValueChange(e) {
-        this.setState({ [e.target.name]: e.target.value });
+        this.setState({ [e.target.name]: e.target.value }); //change field's value
+        const { errors } = this.state;
+        if (errors[e.target.name] && e.target.value.trim().length > 0) {
+            const { ...newErrors } = errors;
+            delete newErrors[e.target.name];
+            this.setState({ errors: newErrors });
+        }
     }
 
     validateForm(fields) {
