@@ -1,35 +1,43 @@
 import React, { Component } from "react";
 import { Consumer } from "../context";
+import { Link, NavLink } from "react-router-dom";
 
 export class Header extends Component {
-    handleAddContactClick(dispatch) {
-        dispatch({ type: "SHOW_HIDE_ADD_CONTACT_VIEW", payload: true });
-    }
     render() {
         return (
             <Consumer>
                 {value => {
-                    const { dispatch, addContactVisible } = value;
                     return (
                         <nav className="navbar navbar-expand-sm navbar-dark bg-danger mb-3 py-0">
                             <div className="container">
-                                <a href="/" className="navbar-brand">
+                                <Link to="/" className="navbar-brand">
                                     {this.props.text}
-                                </a>
+                                </Link>
                                 <div>
-                                    <ul className="navbar-nav mr-auto">
-                                        <button
+                                    <div className="navbar-nav mr-auto">
+                                        <NavLink
+                                            to="/"
+                                            exact
                                             className="btn btn-outline-light m-2"
-                                            disabled={addContactVisible}
-                                            onClick={this.handleAddContactClick.bind(
-                                                this,
-                                                dispatch
-                                            )}
                                         >
-                                            <i className="fas fa-plus-circle fa-fw" />
+                                            <i className="fas fa-users fa-fw" />{" "}
+                                            Kontakty
+                                        </NavLink>
+                                        <NavLink
+                                            to="/contact/add"
+                                            className="btn btn-outline-light m-2"
+                                        >
+                                            <i className="fas fa-plus-circle fa-fw" />{" "}
                                             Dodaj kontakt
-                                        </button>
-                                    </ul>
+                                        </NavLink>
+                                        <NavLink
+                                            to="/about"
+                                            className="btn btn-outline-light m-2"
+                                        >
+                                            <i className="fas fa-question-circle fa-fw" />{" "}
+                                            O programie
+                                        </NavLink>
+                                    </div>
                                 </div>
                             </div>
                         </nav>

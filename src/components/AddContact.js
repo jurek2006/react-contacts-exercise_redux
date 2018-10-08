@@ -20,7 +20,7 @@ export class AddContact extends Component {
 
     handleCancel(dispatch) {
         this.setState(this.emptyFormState);
-        dispatch({ type: "SHOW_HIDE_ADD_CONTACT_VIEW", payload: false });
+        this.props.history.push("/");
     }
 
     handleSubmit(dispatch, e) {
@@ -30,6 +30,7 @@ export class AddContact extends Component {
             // if pasess validation with no errors
             dispatch({ type: "ADD_CONTACT", payload: fields });
             this.setState(this.emptyFormState);
+            this.props.history.push("/");
         }
     }
 
@@ -63,97 +64,96 @@ export class AddContact extends Component {
         return (
             <Consumer>
                 {value => {
-                    const { addContactVisible, dispatch } = value;
-                    if (addContactVisible)
-                        return (
-                            <div className="card m-3">
-                                <h2 className="card-header bg-danger">
-                                    Dodaj kontakt
-                                </h2>
-                                <div className="card-body">
-                                    <form
-                                        onSubmit={this.handleSubmit.bind(
-                                            this,
-                                            dispatch
+                    const { dispatch } = value;
+                    return (
+                        <div className="card m-3">
+                            <h2 className="card-header bg-danger">
+                                Dodaj kontakt
+                            </h2>
+                            <div className="card-body">
+                                <form
+                                    onSubmit={this.handleSubmit.bind(
+                                        this,
+                                        dispatch
+                                    )}
+                                >
+                                    <FormGroup
+                                        label="Imię"
+                                        name="firstName"
+                                        placeholder="Podaj imię"
+                                        value={firstName}
+                                        onChange={this.handleFieldValueChange.bind(
+                                            this
                                         )}
-                                    >
-                                        <FormGroup
-                                            label="Imię"
-                                            name="firstName"
-                                            placeholder="Podaj imię"
-                                            value={firstName}
-                                            onChange={this.handleFieldValueChange.bind(
-                                                this
-                                            )}
-                                            errors={errors}
-                                            errorMessage="Nie podano imienia"
+                                        errors={errors}
+                                        errorMessage="Nie podano imienia"
+                                    />
+                                    <FormGroup
+                                        label="Nazwisko"
+                                        name="lastName"
+                                        placeholder="Podaj nazwisko"
+                                        value={lastName}
+                                        onChange={this.handleFieldValueChange.bind(
+                                            this
+                                        )}
+                                        errors={errors}
+                                        errorMessage="Nie podano nazwiska"
+                                    />
+                                    <FormGroup
+                                        label="Email"
+                                        name="email"
+                                        type="email"
+                                        placeholder="Podaj email"
+                                        value={email}
+                                        onChange={this.handleFieldValueChange.bind(
+                                            this
+                                        )}
+                                        errors={errors}
+                                        errorMessage="Nie podano adresu email"
+                                    />
+                                    <FormGroup
+                                        label="Telefon"
+                                        name="phone"
+                                        type="tel"
+                                        placeholder="Podaj numer telefonu"
+                                        value={phone}
+                                        onChange={this.handleFieldValueChange.bind(
+                                            this
+                                        )}
+                                        errors={errors}
+                                        errorMessage="Nie podano numeru telefonu"
+                                    />
+                                    <FormGroup
+                                        label="Miejscowość"
+                                        name="city"
+                                        placeholder="Podaj miejscowość zamieszkania"
+                                        value={city}
+                                        onChange={this.handleFieldValueChange.bind(
+                                            this
+                                        )}
+                                        errors={errors}
+                                        errorMessage="Nie podano miasta"
+                                    />
+                                    <div className="text-center">
+                                        <input
+                                            type="submit"
+                                            value="Dodaj kontakt"
+                                            className="btn btn-success mx-1"
                                         />
-                                        <FormGroup
-                                            label="Nazwisko"
-                                            name="lastName"
-                                            placeholder="Podaj nazwisko"
-                                            value={lastName}
-                                            onChange={this.handleFieldValueChange.bind(
-                                                this
+                                        <input
+                                            onClick={this.handleCancel.bind(
+                                                this,
+                                                dispatch
                                             )}
-                                            errors={errors}
-                                            errorMessage="Nie podano nazwiska"
+                                            type="button"
+                                            className="btn btn-secondary"
+                                            value="Anuluj"
                                         />
-                                        <FormGroup
-                                            label="Email"
-                                            name="email"
-                                            type="email"
-                                            placeholder="Podaj email"
-                                            value={email}
-                                            onChange={this.handleFieldValueChange.bind(
-                                                this
-                                            )}
-                                            errors={errors}
-                                            errorMessage="Nie podano adresu email"
-                                        />
-                                        <FormGroup
-                                            label="Telefon"
-                                            name="phone"
-                                            type="tel"
-                                            placeholder="Podaj numer telefonu"
-                                            value={phone}
-                                            onChange={this.handleFieldValueChange.bind(
-                                                this
-                                            )}
-                                            errors={errors}
-                                            errorMessage="Nie podano numeru telefonu"
-                                        />
-                                        <FormGroup
-                                            label="Miejscowość"
-                                            name="city"
-                                            placeholder="Podaj miejscowość zamieszkania"
-                                            value={city}
-                                            onChange={this.handleFieldValueChange.bind(
-                                                this
-                                            )}
-                                            errors={errors}
-                                            errorMessage="Nie podano miasta"
-                                        />
-                                        <div className="text-center">
-                                            <input
-                                                type="submit"
-                                                value="Dodaj kontakt"
-                                                className="btn btn-success mx-1"
-                                            />
-                                            <input
-                                                onClick={this.handleCancel.bind(
-                                                    this,
-                                                    dispatch
-                                                )}
-                                                type="button"
-                                                className="btn btn-secondary"
-                                                value="Anuluj"
-                                            />
-                                        </div>
-                                    </form>
-                                </div>
+                                    </div>
+                                </form>
                             </div>
-                        );
+                        </div>
+                    );
                 }}
             </Consumer>
         );

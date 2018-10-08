@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Contact } from "./Contact";
 import { Consumer } from "../context";
-import { AddContact } from "./AddContact";
 
 export class Contacts extends Component {
     renderContactsList(contacts) {
@@ -21,7 +20,6 @@ export class Contacts extends Component {
                     const { contacts } = value;
                     return (
                         <React.Fragment>
-                            <AddContact />
                             <div className="card m-3">
                                 <h1 className="card-header bg-danger">
                                     Kontakty
