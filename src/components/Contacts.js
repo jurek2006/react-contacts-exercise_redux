@@ -6,11 +6,11 @@ import { AddContact } from "./AddContact";
 export class Contacts extends Component {
     renderContactsList(contacts) {
         return (
-            <ul>
+            <React.Fragment>
                 {contacts.map(contact => (
                     <Contact key={contact.id} contact={contact} />
                 ))}
-            </ul>
+            </React.Fragment>
         );
     }
 
