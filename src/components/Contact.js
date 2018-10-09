@@ -1,15 +1,17 @@
 import React, { Component } from "react";
 import classnames from "classnames";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { deleteContact } from "../actions/contactActions";
 
 export class Contact extends Component {
     state = {
         showContactInfo: false
     };
 
-    // DELETE CONTACT
-    // handleDeleteContact(id, dispatch) {
-    //     dispatch({ type: "DELETE_CONTACT", payload: id });
-    // }
+    handleDeleteContact(id) {
+        this.props.deleteContact(id);
+    }
 
     render() {
         const {
@@ -41,6 +43,7 @@ export class Contact extends Component {
                     />
                     <i
                         className="fas fa-times"
+                        onClick={this.handleDeleteContact.bind(this, id)}
                         style={{
                             cursor: "pointer",
                             float: "right"
@@ -74,4 +77,12 @@ export class Contact extends Component {
     }
 }
 
-export default Contact;
+Contact.propTypes = {
+    contact: PropTypes.object.isRequired,
+    deleteContact: PropTypes.func.isRequired
+};
+
+export default connect(
+    null,
+    { deleteContact }
+)(Contact);

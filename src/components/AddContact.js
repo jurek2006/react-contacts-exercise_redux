@@ -1,5 +1,9 @@
 import React, { Component } from "react";
-import { FormGroup } from "./FormGroup";
+import { connect } from "react-redux";
+import { addContact } from "../actions/contactActions";
+import PropTypes from "prop-types";
+import FormGroup from "./FormGroup";
+import uuid from "uuid";
 
 export class AddContact extends Component {
     constructor(props) {
@@ -24,18 +28,15 @@ export class AddContact extends Component {
 
     handleSubmit(e) {
         e.preventDefault();
+        const { errors, ...fields } = this.state; //destructing to have fiels from state, without errors
+        if (this.validateForm(fields, errors)) {
+            // if pasess validation with no errors
+            const newContact = { ...fields, id: uuid() };
+            this.props.addContact(newContact);
+            this.setState(this.emptyFormState);
+            this.props.history.push("/");
+        }
     }
-
-    // handleSubmit(dispatch, e) {
-    //     e.preventDefault();
-    //     const { errors, ...fields } = this.state; //destructing to have fiels from state, without errors
-    //     if (this.validateForm(fields, errors)) {
-    //         // if pasess validation with no errors
-    //         dispatch({ type: "ADD_CONTACT", payload: fields });
-    //         this.setState(this.emptyFormState);
-    //         this.props.history.push("/");
-    //     }
-    // }
 
     handleFieldValueChange(e) {
         this.setState({ [e.target.name]: e.target.value }); //change field's value
@@ -136,4 +137,11 @@ export class AddContact extends Component {
     }
 }
 
-export default AddContact;
+AddContact.propTypes = {
+    addContact: PropTypes.func.isRequired
+};
+
+export default connect(
+    null,
+    { addContact }
+)(AddContact);
