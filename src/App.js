@@ -1,18 +1,19 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "./App.css";
-import { Contacts } from "./components/Contacts";
+import Contacts from "./components/Contacts";
 import { AddContact } from "./components/AddContact";
 import About from "./components/About";
 import NotFound from "./components/NotFound";
-import { Provider } from "./context";
 import { Header } from "./components/Header";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { Provider } from "react-redux";
+import store from "./store";
 
 class App extends Component {
     render() {
         return (
-            <Provider>
+            <Provider store={store}>
                 <Router>
                     <div className="App">
                         <Header text="Kontakty" />
