@@ -3,6 +3,7 @@ import classnames from "classnames";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { deleteContact } from "../actions/contactActions";
+import { Link } from "react-router-dom";
 
 export class Contact extends Component {
     state = {
@@ -49,6 +50,16 @@ export class Contact extends Component {
                             float: "right"
                         }}
                     />
+                    <Link to={`/contact/edit/${id}`}>
+                        <i
+                            className="fas fa-edit"
+                            style={{
+                                cursor: "pointer",
+                                float: "right",
+                                marginRight: "1rem"
+                            }}
+                        />
+                    </Link>
                 </h2>
                 {showContactInfo && (
                     <div className="card-body">

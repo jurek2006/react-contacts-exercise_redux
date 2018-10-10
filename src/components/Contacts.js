@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import Contact from "./Contact";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { getContacts } from "../actions/contactActions";
 
 export class Contacts extends Component {
     renderContactsList(contacts) {
@@ -13,10 +12,6 @@ export class Contacts extends Component {
                 ))}
             </React.Fragment>
         );
-    }
-
-    componentDidMount() {
-        this.props.getContacts();
     }
 
     render() {
@@ -35,13 +30,9 @@ export class Contacts extends Component {
 }
 
 Contacts.propTypes = {
-    contacts: PropTypes.array.isRequired,
-    getContacts: PropTypes.func.isRequired
+    contacts: PropTypes.array.isRequired
 };
 
 const mapStateToProps = state => ({ contacts: state.contact.contacts });
 
-export default connect(
-    mapStateToProps,
-    { getContacts }
-)(Contacts);
+export default connect(mapStateToProps)(Contacts);

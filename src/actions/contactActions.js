@@ -1,4 +1,9 @@
-import { GET_CONTACTS, DELETE_CONTACT, ADD_CONTACT } from "./types";
+import {
+    GET_CONTACTS,
+    DELETE_CONTACT,
+    ADD_CONTACT,
+    EDIT_CONTACT
+} from "./types";
 
 export const getContacts = () => {
     return {
@@ -16,6 +21,12 @@ export const deleteContact = id => {
 export const addContact = contact => {
     return {
         type: ADD_CONTACT,
+        payload: contact
+    };
+};
+export const editContact = contact => {
+    return {
+        type: EDIT_CONTACT,
         payload: contact
     };
 };

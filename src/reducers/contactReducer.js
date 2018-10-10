@@ -1,4 +1,9 @@
-import { GET_CONTACTS, ADD_CONTACT, DELETE_CONTACT } from "../actions/types";
+import {
+    GET_CONTACTS,
+    ADD_CONTACT,
+    DELETE_CONTACT,
+    EDIT_CONTACT
+} from "../actions/types";
 import uuid from "uuid";
 
 const initialState = {
@@ -39,6 +44,16 @@ export default function(state = initialState, action) {
             return {
                 ...state,
                 contacts: [action.payload, ...state.contacts]
+            };
+        case EDIT_CONTACT:
+            return {
+                ...state,
+                contacts: [
+                    action.payload,
+                    ...state.contacts.filter(
+                        contact => contact.id !== action.payload.id
+                    )
+                ]
             };
         default:
             return state;
