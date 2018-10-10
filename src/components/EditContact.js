@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { editContact } from "../actions/contactActions";
 import PropTypes from "prop-types";
 import FormGroup from "./FormGroup";
+import { Link } from "react-router-dom";
 
 export class EditContact extends Component {
     constructor(props) {
@@ -65,82 +66,121 @@ export class EditContact extends Component {
     componentDidMount() {
         const id = this.props.match.params.id; //parameter got from url
         // set state of the component to contact data for contact which matches given id (and add empty errors)
-        this.setState({
-            ...this.props.contacts.find(contact => contact.id === id),
-            errors: {}
-        });
+        const contactToEdit = this.props.contacts.find(
+            contact => contact.id === id
+        );
+        if (contactToEdit) {
+            // if contact with given id found set its properties to state of the component
+            this.setState({
+                ...contactToEdit,
+                errors: {}
+            });
+        } else {
+            // if there is no contact with given id set errors.contactNotFound to true
+            this.setState({ errors: { contactNotFound: true } });
+        }
     }
 
     render() {
         const { firstName, lastName, email, phone, city, errors } = this.state;
         return (
-            <div className="card m-3">
-                <h2 className="card-header bg-danger">Edytuj kontakt</h2>
-                <div className="card-body">
-                    <form onSubmit={this.handleSubmit.bind(this)}>
-                        <FormGroup
-                            label="Imię"
-                            name="firstName"
-                            placeholder="Podaj imię"
-                            value={firstName}
-                            onChange={this.handleFieldValueChange.bind(this)}
-                            errors={errors}
-                            errorMessage="Nie podano imienia"
-                        />
-                        <FormGroup
-                            label="Nazwisko"
-                            name="lastName"
-                            placeholder="Podaj nazwisko"
-                            value={lastName}
-                            onChange={this.handleFieldValueChange.bind(this)}
-                            errors={errors}
-                            errorMessage="Nie podano nazwiska"
-                        />
-                        <FormGroup
-                            label="Email"
-                            name="email"
-                            type="email"
-                            placeholder="Podaj email"
-                            value={email}
-                            onChange={this.handleFieldValueChange.bind(this)}
-                            errors={errors}
-                            errorMessage="Nie podano adresu email"
-                        />
-                        <FormGroup
-                            label="Telefon"
-                            name="phone"
-                            type="tel"
-                            placeholder="Podaj numer telefonu"
-                            value={phone}
-                            onChange={this.handleFieldValueChange.bind(this)}
-                            errors={errors}
-                            errorMessage="Nie podano numeru telefonu"
-                        />
-                        <FormGroup
-                            label="Miejscowość"
-                            name="city"
-                            placeholder="Podaj miejscowość zamieszkania"
-                            value={city}
-                            onChange={this.handleFieldValueChange.bind(this)}
-                            errors={errors}
-                            errorMessage="Nie podano miasta"
-                        />
-                        <div className="text-center">
-                            <input
-                                type="submit"
-                                value="Zapisz kontakt"
-                                className="btn btn-success mx-1"
-                            />
-                            <input
-                                onClick={this.handleCancel.bind(this)}
-                                type="button"
-                                className="btn btn-secondary"
-                                value="Anuluj"
-                            />
+            <React.Fragment>
+                {errors.contactNotFound && (
+                    <div className="card m-3">
+                        <h2 className="card-header bg-danger">
+                            Kontakt nie istnieje
+                        </h2>
+                        <div className="card-body">
+                            <p> Niestety kontakt o zadanym id nie istnieje.</p>
+                            <Link className="btn btn-secondary" to="/">
+                                Przejdź do listy kontaktów
+                            </Link>
                         </div>
-                    </form>
-                </div>
-            </div>
+                    </div>
+                )}
+
+                {!errors.contactNotFound && (
+                    <div className="card m-3">
+                        <h2 className="card-header bg-danger">
+                            Edytuj kontakt
+                        </h2>
+                        <div className="card-body">
+                            <form onSubmit={this.handleSubmit.bind(this)}>
+                                <FormGroup
+                                    label="Imię"
+                                    name="firstName"
+                                    placeholder="Podaj imię"
+                                    value={firstName}
+                                    onChange={this.handleFieldValueChange.bind(
+                                        this
+                                    )}
+                                    errors={errors}
+                                    errorMessage="Nie podano imienia"
+                                />
+                                <FormGroup
+                                    label="Nazwisko"
+                                    name="lastName"
+                                    placeholder="Podaj nazwisko"
+                                    value={lastName}
+                                    onChange={this.handleFieldValueChange.bind(
+                                        this
+                                    )}
+                                    errors={errors}
+                                    errorMessage="Nie podano nazwiska"
+                                />
+                                <FormGroup
+                                    label="Email"
+                                    name="email"
+                                    type="email"
+                                    placeholder="Podaj email"
+                                    value={email}
+                                    onChange={this.handleFieldValueChange.bind(
+                                        this
+                                    )}
+                                    errors={errors}
+                                    errorMessage="Nie podano adresu email"
+                                />
+                                <FormGroup
+                                    label="Telefon"
+                                    name="phone"
+                                    type="tel"
+                                    placeholder="Podaj numer telefonu"
+                                    value={phone}
+                                    onChange={this.handleFieldValueChange.bind(
+                                        this
+                                    )}
+                                    errors={errors}
+                                    errorMessage="Nie podano numeru telefonu"
+                                />
+                                <FormGroup
+                                    label="Miejscowość"
+                                    name="city"
+                                    placeholder="Podaj miejscowość zamieszkania"
+                                    value={city}
+                                    onChange={this.handleFieldValueChange.bind(
+                                        this
+                                    )}
+                                    errors={errors}
+                                    errorMessage="Nie podano miasta"
+                                />
+                                <div className="text-center">
+                                    <input
+                                        type="submit"
+                                        value="Zapisz kontakt"
+                                        className="btn btn-success mx-1"
+                                    />
+                                    <input
+                                        onClick={this.handleCancel.bind(this)}
+                                        type="button"
+                                        className="btn btn-secondary"
+                                        value="Anuluj"
+                                    />
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                )}
+            </React.Fragment>
         );
     }
 }
